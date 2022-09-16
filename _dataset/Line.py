@@ -1,12 +1,8 @@
 class Line:
-    def __init__(self,line,name,colour,stripe) -> None:
-        self.line= line
+    def __init__(self,name,colour,stripe) -> None:
         self.name = name
         self.colour = colour
         self.stripe = stripe
-
-    def get_line(self):
-        return self.line
 
     def get_name(self):
         return self.name
