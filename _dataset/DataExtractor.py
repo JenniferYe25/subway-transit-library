@@ -1,47 +1,48 @@
 import csv
-from Connection import Connection
 from Line import Line
-from Station import Station 
+from Station import Station
+from Connection import Connection 
 
 class DataExtractor:
-
-    def __init__(self) -> None:
+    def __init__(self):
         pass
+    
+    # String path
+    # required[] - list of required headings, assume it's in the same order as the obj it wants to create
+    # obj - object type to create
+    # assume all required info is in one file 
+    def extractRows(self,path,required,obj):
+        fileType=path[-3:].lower()
 
-    def extractRows(self,path):
-        with open(path) as csvFile:
-            csvreader = csv.DictReader(csvFile)
+        if fileType == "csv":
+                with open(path) as csvFile:
+                    csvreader = list(csv.reader(csvFile))
+                    header=csvreader[0] #list of all headings in file
+                    neededIndex=[] #index of all the required headings in refernce to header list
+                    otherIndex=[] #index of all other headings
+                    objects=[] #list of obj to return 
 
-            rows = []
-            for row in csvreader:
-                rows.append(row)
-            csvFile.close()
-        return rows
+                    for r in header: #filling list 
+                        if(r not in required):
+                            otherIndex.append(header.index(r))
+                        else:
+                            neededIndex.append(header.index(r)) 
+                    print(neededIndex)
+                    print(otherIndex) 
+                 
+                    #creating objs                        
+                    for row in csvreader[1:]:
+                        req=[row[neededIndex[i]] for i in range(len(neededIndex))] 
+                        # print("req: ",req)
+                        other={header[otherIndex[i]]: row[otherIndex[i]] for i in range(len(otherIndex))}
+                        # print(other)
+                        objects.append(obj(*req,other))
+                    csvFile.close()
+        # add new if stament if have different file type to handle 
+        return objects
 
-    def StationsBuilding(self,path):
-        rows=self.extractRows(path)
-        stations=dict()
-        for row in rows:
-            if(row["id"] not in stations):
-                stations.update({int(row["id"]):Station(row["latitude"],row["longitude"],row["name"],row["display_name"],row["zone"],row["total_lines"],row["rail"])})
-        return stations
+# testing
+data=DataExtractor()
+data.extractRows('_dataset/london.stations.csv',['id'],Station)
+# print(data.extractRows('_dataset/london.connections.csv',['station1', 'station2', 'time'],Connection))
 
-    def ConnectionBuilding(self,path):
-            rows=self.extractRows(path)
-            connections=dict()
-            for row in rows:
-                station1=int(row["station1"])
-                otherData=Connection(row["station2"],row["line"],row["time"])
-                if(station1 not in connections):
-                    connections.update({station1:[otherData]})
-                else:
-                    connections[station1].append(otherData)
-            return connections
-
-    def LinesBuilding(self,path):
-        rows=self.extractRows(path)
-        lines=dict()
-        for row in rows:
-            if(row["line"] not in lines):
-                lines.update({int(row["line"]):Line(row["name"],row["colour"],row["stripe"])})
-        return lines
