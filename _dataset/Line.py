@@ -1,18 +1,8 @@
 class Line:
-    def __init__(self,line,name,colour,stripe) -> None:
-        self.line= line
-        self.name = name
-        self.colour = colour
-        self.stripe = stripe
-
-    def get_line(self):
-        return self.line
-
-    def get_name(self):
-        return self.name
-
-    def get_colour(self):
-        return self.colour
+    def __init__(self,line,other={}) -> None:
+        self.line = line
+        for key in other.keys():
+            setattr(self, key, other[key])
     
-    def get_stripe(self):
-        return self.stripe
+    def _detail(self):
+        print("line: ", self.line," name:", self.name, "colour: ", self.colour, "stripe: ", self.stripe)
