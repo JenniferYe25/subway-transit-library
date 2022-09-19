@@ -1,4 +1,5 @@
 import csv
+import re
 from Line import Line
 from Station import Station
 from Connection import Connection 
@@ -27,15 +28,12 @@ class DataExtractor:
                             otherIndex.append(header.index(r))
                         else:
                             neededIndex.append(header.index(r)) 
-                    print(neededIndex)
-                    print(otherIndex) 
                  
                     #creating objs                        
                     for row in csvreader[1:]:
                         req=[row[neededIndex[i]] for i in range(len(neededIndex))] 
-                        # print("req: ",req)
                         other={header[otherIndex[i]]: row[otherIndex[i]] for i in range(len(otherIndex))}
-                        # print(other)
+                        # print("req ", req)
                         objects.append(obj(*req,other))
                     csvFile.close()
         # add new if stament if have different file type to handle 
@@ -43,6 +41,6 @@ class DataExtractor:
 
 # testing
 data=DataExtractor()
-data.extractRows('_dataset/london.stations.csv',['id'],Station)
-# print(data.extractRows('_dataset/london.connections.csv',['station1', 'station2', 'time'],Connection))
+# data.extractRows('_dataset/london.stations.csv',['id'],Station)
+data.extractRows('_dataset/london.connections.csv',['station1', 'station2', 'time'],Connection)
 
