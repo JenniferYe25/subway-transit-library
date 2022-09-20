@@ -17,7 +17,7 @@ class MetricExtractor:
 
     def average_degree(self, graph):
         metric = MetricExtractor()
-        if(graph.graph_type == "undircted"): return (metric.total_edges(graph)/2)/metric.total_nodes(graph)
+        if(graph.graph_type == "undirected"): return (metric.total_edges(graph)/2)/metric.total_nodes(graph)
 
         # print(metric.total_edges(graph))
         # print(metric.total_nodes(graph))
