@@ -1,6 +1,6 @@
 from DataExtractor import DataExtractor
-from Station import Station
-from Line import Line
+from GraphObjects.Station import*
+from GraphObjects.Line import*
 
 class DictionaryBuilder:
     # key must be an array []

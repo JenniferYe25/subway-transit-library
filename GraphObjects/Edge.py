@@ -10,7 +10,6 @@ class Edge:
         if(end.isdigit()): self.end = int(end)
         else: self.end = end
         for key in other.keys():
-            if(other[key].isdigit()): other[key] = int(other[key])
             setattr(self, key, other[key])
 
     
@@ -19,7 +18,6 @@ class WeightedEdge(Edge):
         super().__init__(start, end)
         self.weight = int(weight)
         for key in other.keys():
-            if(other[key].isdigit()): other[key] = int(other[key])
             setattr(self, key, other[key])
 
     # temp method for checking - will remove later

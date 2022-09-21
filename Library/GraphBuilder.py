@@ -1,6 +1,5 @@
 from DataExtractor import DataExtractor
-from Station import Station
-from Edge import Edge, WeightedEdge
+from GraphObjects.Edge import *
 
 class GraphBuilder:
     def __init__(self,path,required,edge_type,graph_type):
