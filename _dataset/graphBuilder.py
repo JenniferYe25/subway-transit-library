@@ -1,6 +1,6 @@
 from DataExtractor import DataExtractor
-from Connection import Connection
 from Station import Station
+from Edge import Edge, WeightedEdge
 
 class GraphBuilder:
     def __init__(self,path,required,edge_type,graph_type):
@@ -14,22 +14,29 @@ class GraphBuilder:
         #getting list of required attributes 
         required_attributes=list(vars(data_obj[0]).keys())
 
-        for d in data_obj:
-            # setting value in hash
-            end=getattr(d,required_attributes[1])
-            otherData=[]
-            for i in required_attributes[2:]:
-                otherData.append(getattr(d, i))
-            for i in att:
-                otherData.append(getattr(d,i))
-            connections=({end:otherData})
+        match graph_type:
+            case "undirected":
+                for d in data_obj:
 
-            # adding entry to hashmap
-            if(getattr(d,required_attributes[0]) not in self.graph):
-                self.graph.update({getattr(d,required_attributes[0]):[connections]})
-            else:
-                self.graph[getattr(d,required_attributes[0])].append(connections)
-    
+                    # setting value in hash
+                    start,end=d.start, d.end
+
+                    otherData=[]
+                    for i in required_attributes[2:]:
+                        otherData.append(getattr(d, i))
+                    for i in att:
+                        otherData.append(getattr(d,i))
+                    connection1, connection2 =({end:otherData}), ({start:otherData})   
+
+                    # adding entry to hashmap
+                    if start not in self.graph:
+                        self.graph[start] = []
+                    if end not in self.graph:
+                        self.graph[end] = []
+                    
+                    self.graph[start].append(connection1)
+                    self.graph[end].append(connection2)
+
     def get_nodes(self):
         return list(self.graph.keys())
 
@@ -44,10 +51,8 @@ class GraphBuilder:
                 return i[node2][0]
         return 0
             
-
-print(GraphBuilder('_dataset/test.connections.csv',['station1','station2','time'],Directed).graph)
 # print()
-# print(GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection).get_nodes())
+print(GraphBuilder('_dataset/test.connections.csv',['station1','station2','time'],WeightedEdge,"undirected").graph)
 # print()
 # print(GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection).value(11,83))
 
