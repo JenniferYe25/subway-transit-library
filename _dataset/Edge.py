@@ -10,6 +10,7 @@ class Edge:
         if(end.isdigit()): self.end = int(end)
         else: self.end = end
         for key in other.keys():
+            if(other[key].isdigit()): other[key] = int(other[key])
             setattr(self, key, other[key])
 
     
