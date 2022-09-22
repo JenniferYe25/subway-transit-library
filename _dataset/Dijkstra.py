@@ -11,10 +11,12 @@ class Dijkstra:
         self.parent = {vertex: None for vertex in graph.get_nodes()} # store path 
         self.start = start_node
         self.target = target_node
+        self.path = []
 
-        prev_line=list(graph.get_edges(start_node)[0].items())[0][1][0]
+    def run(self):
+        prev_line=list(graph.get_edges(self.start)[0].items())[0][1][0]
 
-        pq = [(0, start_node)]
+        pq = [(0, self.start)]
         while len(pq) > 0:
             current_distance, current_vertex = heapq.heappop(pq)
 
@@ -37,8 +39,7 @@ class Dijkstra:
                 prev_line=current_line
                 heapq.heappush(pq, (distance, neighbor))
 
-        self.path = []
-        current = target_node
+        current = self.target
 
         while current:
             self.path.append(current)
@@ -46,8 +47,8 @@ class Dijkstra:
         
     
     def print_path(self):
-        self.path = self.path [::-1]
-        print("path from ", self.start, " to  ", self.target)
+        self.path = self.path[::-1]
+        print("path from", self.start, "to", self.target)
         print_path=""
         for node in self.path[:-1]:
             print_path+=str(node)+" -> "
@@ -56,9 +57,7 @@ class Dijkstra:
 
 graph=(GraphBuilder('_dataset/test.connections.csv',['station1','station2','time'],WeightedEdge,"undirected"))
 
-# graph=(GraphBuilder('_dataset/test.graph.csv',["start","end","weight"],Connection))
-# print(graph.graph)
-# print(graph.get_nodes())
 d = Dijkstra(graph, 1, 7)
+d.run()
 d.print_path()
 
