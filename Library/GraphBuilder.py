@@ -1,5 +1,5 @@
 from DataExtractor import DataExtractor
-from GraphObjects.Edge import *
+from GraphObjects.Edge import*
 
 class GraphBuilder:
     def __init__(self,path,required,edge_type,graph_type):

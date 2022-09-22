@@ -1,7 +1,7 @@
 import heapq
 from importlib.resources import path
 
-from graphBuilder import GraphBuilder
+from Library.GraphBuilder import GraphBuilder
 from Edge import WeightedEdge
 
 class Dijkstra:
@@ -11,10 +11,12 @@ class Dijkstra:
         self.parent = {vertex: None for vertex in graph.get_nodes()} # store path 
         self.start = start_node
         self.target = target_node
+        self.graph=graph
 
+    def start(self):
         prev_line=list(graph.get_edges(start_node)[0].items())[0][1][0]
 
-        pq = [(0, start_node)]
+        pq = [(0, self.start)]
         while len(pq) > 0:
             current_distance, current_vertex = heapq.heappop(pq)
 
@@ -52,13 +54,4 @@ class Dijkstra:
         for node in self.path[:-1]:
             print_path+=str(node)+" -> "
         print(print_path+str(self.path[-1]))
-
-
-graph=(GraphBuilder('_dataset/test.connections.csv',['station1','station2','time'],WeightedEdge,"undirected"))
-
-# graph=(GraphBuilder('_dataset/test.graph.csv',["start","end","weight"],Connection))
-# print(graph.graph)
-# print(graph.get_nodes())
-d = Dijkstra(graph, 1, 7)
-d.print_path()
 

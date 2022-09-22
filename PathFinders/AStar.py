@@ -1,12 +1,8 @@
-from graphBuilder import GraphBuilder
-from Connection import Connection 
-from Station import Station
+from GraphObjects.Station import Station
 from DictionaryBuilder import DictionaryBuilder
-from Edge import Edge
-from Edge import WeightedEdge
+from Edge import *
 
 import heapq
-
 
 def a_star(graph, start, dest):
     distances = {vertex: float('inf') for vertex in graph.get_nodes()} 
@@ -53,18 +49,12 @@ def generate_path_from_parents(parent, start, dest):
 
 
 def calculate_heuristic(start, dest):
-
         node1x, node1y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['latitude'], DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['longitude']
         node2x, node2y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[dest]['latitude'] , DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[dest]['longitude']
         heuristic = abs(float(node1x) - float(node2x)) + \
             abs(float(node1y) - float(node2y))
         return 100*heuristic
 
-graph = (GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection,'undirected'))
-start = '100'
-dest = '11'
 
-distances,parent = a_star(graph, start, dest)
-print('optimal path => ', generate_path_from_parents(parent,start,dest))
 
 
