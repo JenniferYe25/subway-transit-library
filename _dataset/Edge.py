@@ -16,8 +16,11 @@ class Edge:
     
 class WeightedEdge(Edge):
     def __init__(self,start, end, weight,other={}) -> None:
-        super().__init__(start, end, other)
+        super().__init__(start, end)
         self.weight = int(weight)
+        for key in other.keys():
+            if(other[key].isdigit()): other[key] = int(other[key])
+            setattr(self, key, other[key])
 
     # temp method for checking - will remove later
     def _detail(self):
