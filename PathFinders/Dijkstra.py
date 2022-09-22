@@ -1,7 +1,7 @@
 import heapq
 from importlib.resources import path
 
-from graphBuilder import GraphBuilder
+from Library.GraphBuilder import GraphBuilder
 from Edge import WeightedEdge
 from PathFinder import PathFinder
 
@@ -50,12 +50,4 @@ class Dijkstra(PathFinder):
         for node in self.path[:-1]:
             print_path+=str(node)+" -> "
         print(print_path+str(self.path[-1]))
-
-
-graph=(GraphBuilder('_dataset/test.connections.csv',['station1','station2','time'],WeightedEdge,"undirected"))
-
-
-d = Dijkstra(graph, 1, 7)
-d.run()
-d.print_path()
 

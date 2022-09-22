@@ -1,6 +1,4 @@
-from graphBuilder import GraphBuilder
-from Connection import Connection 
-from Station import Station
+from GraphObjects.Station import Station
 from DictionaryBuilder import DictionaryBuilder
 from Edge import *
 from PathFinder import PathFinder
@@ -54,17 +52,15 @@ class AStar(PathFinder):
         return 'optimal path is: ', '->'.join(path[::-1])
 
 
-    def calculate_heuristic(start, target):
+def calculate_heuristic(start, dest):
+        node1x, node1y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['latitude'], DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['longitude']
+        node2x, node2y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[dest]['latitude'] , DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[dest]['longitude']
+        heuristic = abs(float(node1x) - float(node2x)) + \
+            abs(float(node1y) - float(node2y))
+        return 100*heuristic
 
-            node1x, node1y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['latitude'], DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['longitude']
-            node2x, node2y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[target]['latitude'] , DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[target]['longitude']
-            heuristic = abs(float(node1x) - float(node2x)) + \
-                abs(float(node1y) - float(node2y))
-            return 100*heuristic
 
-graph = (GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection,'undirected'))
-start = '100'
-target = '11'
+
 
 A_Algo = AStar(graph,'100','11')
 distances,parent = A_Algo.run()
