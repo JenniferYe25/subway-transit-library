@@ -19,9 +19,6 @@ class MetricExtractor:
     def average_degree(self):
         metric = MetricExtractor()
         if(self.graph.graph_type == "undirected"): return (metric.total_edges(graph)/2)/metric.total_nodes(graph)
-
-        # print(metric.total_edges(graph))
-        # print(metric.total_nodes(graph))
         return metric.total_edges(self.graph)/metric.total_nodes(self.graph)
         
     def degree(self):
@@ -29,5 +26,3 @@ class MetricExtractor:
         return degree
 
 graph = GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],WeightedEdge,"undirected")
-metric = MetricExtractor(graph,8)
-print(metric.degree())
