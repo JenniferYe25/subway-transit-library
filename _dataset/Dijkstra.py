@@ -3,14 +3,11 @@ from importlib.resources import path
 
 from graphBuilder import GraphBuilder
 from Edge import WeightedEdge
+from PathFinder import PathFinder
 
-class Dijkstra:
+class Dijkstra(PathFinder):
     def __init__(self, graph, start_node, target_node) -> None:
-        self.distances = {vertex: float('inf') for vertex in graph.get_nodes()}
-        self.distances[start_node] = 0
-        self.parent = {vertex: None for vertex in graph.get_nodes()} # store path 
-        self.start = start_node
-        self.target = target_node
+        super().__init__(graph, start_node, target_node)
         self.path = []
 
     def run(self):
@@ -56,6 +53,7 @@ class Dijkstra:
 
 
 graph=(GraphBuilder('_dataset/test.connections.csv',['station1','station2','time'],WeightedEdge,"undirected"))
+
 
 d = Dijkstra(graph, 1, 7)
 d.run()

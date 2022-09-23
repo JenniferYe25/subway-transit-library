@@ -3,20 +3,17 @@ from Connection import Connection
 from Station import Station
 from DictionaryBuilder import DictionaryBuilder
 from Edge import *
+from PathFinder import PathFinder
 import heapq
 
-class AStar:
-    def __init__(self, graph, start, dest) -> None:
-        self.distances = {vertex: float('inf') for vertex in graph.get_nodes()}
-        self.distances[start] = 0
-        self.parent = {vertex: None for vertex in graph.get_nodes()} # store path 
-        self.start = start
-        self.dest = dest
+class AStar(PathFinder):
+    def __init__(self, graph, start, target) -> None:
+        super().__init__(graph, start, target)
 
     def run(self):
         visited = set()
         prev_line=list(graph.get_edges(start)[0].items())[0][1][0]
-        pq = [(AStar.calculate_heuristic(start,dest), 0 ,  start)] 
+        pq = [(AStar.calculate_heuristic(start,target), 0 ,  start)] 
 
         while pq: 
             curr_f, curr_dist, curr_vert = heapq.heappop(pq) 
@@ -40,7 +37,7 @@ class AStar:
                         self.distances[neighbor] = f_distance
                         self.parent[neighbor] = curr_vert
 
-                        if neighbor == dest:
+                        if neighbor == target:
                             # we found a path based on heuristic
                             return self.distances, self.parent
                         heapq.heappush(pq, (f_distance, distance, neighbor)) 
@@ -48,28 +45,28 @@ class AStar:
         return distances, parent
 
 
-    def generate_path_from_parents(self):
+    def print_path(self):
         path = []
-        curr = self.dest
+        curr = self.target
         while curr:
             path.append(curr)
             curr = self.parent[curr]
         return 'optimal path is: ', '->'.join(path[::-1])
 
 
-    def calculate_heuristic(start, dest):
+    def calculate_heuristic(start, target):
 
             node1x, node1y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['latitude'], DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['longitude']
-            node2x, node2y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[dest]['latitude'] , DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[dest]['longitude']
+            node2x, node2y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[target]['latitude'] , DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[target]['longitude']
             heuristic = abs(float(node1x) - float(node2x)) + \
                 abs(float(node1y) - float(node2y))
             return 100*heuristic
 
 graph = (GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection,'undirected'))
 start = '100'
-dest = '11'
+target = '11'
 
 A_Algo = AStar(graph,'100','11')
 distances,parent = A_Algo.run()
-Path=A_Algo.generate_path_from_parents()
+Path=A_Algo.print_path()
 print(Path)
