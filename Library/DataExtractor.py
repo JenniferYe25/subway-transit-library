@@ -1,7 +1,4 @@
 import csv
-from GraphObjects.Line import*
-from GraphObjects.Station import*
-from GraphObjects.Edge import* 
 
 class DataExtractor:
     def __init__(self):
@@ -37,9 +34,4 @@ class DataExtractor:
                     csvFile.close()
         # add new if stament if have different file type to handle 
         return objects
-
-# testing
-# data=DataExtractor()
-# data.extractRows('_dataset/london.stations.csv',['id'],Station)
-# data.extractRows('_dataset/london.connections.csv',['station1', 'station2', 'time'],Connection)
 

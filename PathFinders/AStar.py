@@ -1,6 +1,5 @@
-from GraphObjects.Station import Station
 from DictionaryBuilder import DictionaryBuilder
-from Edge import *
+from ..GraphObjs import *
 
 import heapq
 
