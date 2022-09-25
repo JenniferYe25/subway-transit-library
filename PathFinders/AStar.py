@@ -1,9 +1,7 @@
-from graphBuilder import GraphBuilder
-from Connection import Connection 
-from Station import Station
-from DictionaryBuilder import DictionaryBuilder
-from Edge import *
-from PathFinder import PathFinder
+from ..GraphObjs import *
+from ..Library.DictionaryBuilder import *
+from ..Library.GraphBuilder import *
+
 import heapq
 
 class AStar(PathFinder):
