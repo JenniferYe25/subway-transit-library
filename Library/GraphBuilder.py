@@ -1,5 +1,4 @@
-from DataExtractor import DataExtractor
-from GraphObjects.Edge import*
+from Library.DataExtractor import DataExtractor
 
 class GraphBuilder:
     def __init__(self,path,required,edge_type,graph_type):
@@ -36,13 +35,16 @@ class GraphBuilder:
                     self.graph[start].append(connection1)
                     self.graph[end].append(connection2)
 
+    # gets all nodes in graph
     def get_nodes(self):
         return list(self.graph.keys())
 
+    # gets all edges of given node
     def get_edges(self, node):
         connections = self.graph[node]
         return connections
     
+    # gets weight of an edge
     def value(self, node1, node2):
         print("value ",self.graph[node1])
         for i in self.graph[node1]:
@@ -51,8 +53,7 @@ class GraphBuilder:
         return 0
             
 # print()
-print(GraphBuilder('_dataset/test.connections.csv',['station1','station2','time'],WeightedEdge,"undirected").graph)
+# print(GraphBuilder('_dataset/test.connections.csv',['station1','station2','time'],WeightedEdge,"undirected").graph)
 # print()
 # print(GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection).value(11,83))
-
 # print(GraphBuilder('_dataset/london.stations.csv',['id'],Station).graph)
