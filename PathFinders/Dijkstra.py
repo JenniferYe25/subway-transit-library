@@ -2,7 +2,7 @@ import heapq
 from importlib.resources import path
 
 from Library.GraphBuilder import GraphBuilder
-from Edge import WeightedEdge
+from ..GraphObjs import*
 from PathFinder import PathFinder
 
 class Dijkstra(PathFinder):

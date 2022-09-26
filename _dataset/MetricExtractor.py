@@ -1,5 +1,5 @@
-from Edge import *
-from graphBuilder import GraphBuilder
+from ..GraphObjs import *
+from Library.GraphBuilder import *
 
 class MetricExtractor:
     def __init__(self,graph,node) -> None:
