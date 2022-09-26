@@ -1,6 +1,4 @@
-from DataExtractor import DataExtractor
-from Station import Station
-from Line import Line
+from .DataExtractor import DataExtractor
 
 class DictionaryBuilder:
     # key must be an array []
@@ -14,4 +12,3 @@ class DictionaryBuilder:
         for d in data_obj:           
             self.info.update({vars(d).pop(key[0]): vars(d)})
 
-print(DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info)

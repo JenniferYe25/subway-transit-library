@@ -1,8 +1,4 @@
 import csv
-import re
-from Line import Line
-from Station import Station
-from Connection import Connection 
 
 class DataExtractor:
     def __init__(self):
@@ -22,25 +18,20 @@ class DataExtractor:
                     neededIndex=[] #index of all the required headings in refernce to header list
                     otherIndex=[] #index of all other headings
                     objects=[] #list of obj to return 
-
+                    
                     for r in header: #filling list 
                         if(r not in required):
                             otherIndex.append(header.index(r))
                         else:
                             neededIndex.append(header.index(r)) 
-                 
+                    
                     #creating objs                        
                     for row in csvreader[1:]:
                         req=[row[neededIndex[i]] for i in range(len(neededIndex))] 
                         other={header[otherIndex[i]]: row[otherIndex[i]] for i in range(len(otherIndex))}
-                        # print("req ", req)
+
                         objects.append(obj(*req,other))
                     csvFile.close()
         # add new if stament if have different file type to handle 
         return objects
-
-# testing
-data=DataExtractor()
-# data.extractRows('_dataset/london.stations.csv',['id'],Station)
-data.extractRows('_dataset/london.connections.csv',['station1', 'station2', 'time'],Connection)
 
