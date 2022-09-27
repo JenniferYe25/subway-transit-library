@@ -1,6 +1,14 @@
-from ..GraphObjs import *
-from ..Library.DictionaryBuilder import *
-from ..Library.GraphBuilder import *
+import sys, os
+sys.path.append(os.path.normpath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),'..','PathFinders')))
+sys.path.append("..")
+sys.path.append(".")
+
+from GraphObjs import *
+from Library.DictionaryBuilder import *
+from Library.GraphBuilder import *
+from PathFinder import PathFinder
+
 
 import heapq
 
@@ -60,11 +68,11 @@ class AStar(PathFinder):
                 abs(float(node1y) - float(node2y))
             return 100*heuristic
 
-graph = (GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection,'undirected'))
-start = '100'
-target = '11'
+# graph = (GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection,'undirected'))
+# start = '100'
+# target = '11'
 
-A_Algo = AStar(graph,'100','11')
-distances,parent = A_Algo.run()
-Path=A_Algo.print_path()
-print(Path)
+# A_Algo = AStar(graph,'100','11')
+# distances,parent = A_Algo.run()
+# Path=A_Algo.print_path()
+# print(Path)
