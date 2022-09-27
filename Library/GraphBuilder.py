@@ -1,3 +1,4 @@
+from GraphObjs import WeightedEdge
 from Library.DataExtractor import DataExtractor
 
 class GraphBuilder:
@@ -46,7 +47,7 @@ class GraphBuilder:
     
     # gets weight of an edge
     def value(self, node1, node2):
-        print("value ",self.graph[node1])
+        # print("value ",self.graph[node1])
         for i in self.graph[node1]:
             if(node2 in i.keys()):
                 return i[node2][0]
