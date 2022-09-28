@@ -14,7 +14,7 @@ class Dijkstra(PathFinder):
         self.path = []
 
     def run(self):
-        prev_line=list(graph.get_edges(self.start)[0].items())[0][1][0]
+        prev_line=list(self.graph.get_edges(self.start)[0].items())[0][1][0]
 
         pq = [(0, self.start)]
         while len(pq) > 0:
@@ -23,7 +23,7 @@ class Dijkstra(PathFinder):
             if current_distance > self.distances[current_vertex]:
                 continue
            
-            for connection in graph.get_edges(current_vertex):
+            for connection in self.graph.get_edges(current_vertex):
                 values=list(connection.values())
                 neighbor=list(connection.keys())[0]
                 weight=values[0][0]
