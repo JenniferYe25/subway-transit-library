@@ -13,13 +13,23 @@ from PathFinder import PathFinder
 import heapq
 
 class AStar(PathFinder):
-    def __init__(self, graph, start, target) -> None:
+    def __init__(self, graph, start, target,data,attribute,type,heuristic1,heuristic2) -> None:
         super().__init__(graph, start, target)
+        self.path = []
+        # data file 
+        self.data = data
+        # file value (e.g 'id')
+        self.attribute = attribute
+        # type of data e.g Station
+        self.type = type
+        self.heuristic1 = heuristic1
+        self.heuristic2 = heuristic2
+     
 
     def run(self):
         visited = set()
-        prev_line=list(graph.get_edges(start)[0].items())[0][1][0]
-        pq = [(AStar.calculate_heuristic(start,target), 0 ,  start)] 
+        prev_line=list(self.graph.get_edges(self.start)[0].items())[0][1][0]
+        pq = [(AStar.calculate_heuristic(self.start,self.target,self.data,self.attribute,self.type,self.heuristic1,self.heuristic2), 0 ,  self.start)] 
 
         while pq: 
             curr_f, curr_dist, curr_vert = heapq.heappop(pq) 
@@ -27,13 +37,13 @@ class AStar(PathFinder):
             if curr_vert not in visited:
                 visited.add(curr_vert)
 
-                for connection in graph.get_edges(curr_vert):
+                for connection in self.graph.get_edges(curr_vert):
                     neighbor=list(connection.keys())[0]
                     weight=list(connection.values())[0][0]
                     current_line=list(connection.values())[0][1]
                     distance = curr_dist + weight  # distance from start (g)
 
-                    f_distance = distance + AStar.calculate_heuristic(start,neighbor) # f = g + h
+                    f_distance = distance + AStar.calculate_heuristic(self.start,neighbor,self.data,self.attribute,self.type,self.heuristic1,self.heuristic2) # f = g + h
 
                     if prev_line != current_line:
                         distance+=0.5
@@ -43,36 +53,32 @@ class AStar(PathFinder):
                         self.distances[neighbor] = f_distance
                         self.parent[neighbor] = curr_vert
 
-                        if neighbor == target:
+                        if neighbor == self.target:
                             # we found a path based on heuristic
                             return self.distances, self.parent
                         heapq.heappush(pq, (f_distance, distance, neighbor)) 
         # print('distance' ,distance, 'parent:' , parent)
-        return distances, parent
+        return self.distances, self.parent
 
 
     def print_path(self):
-        path = []
-        curr = self.target
-        while curr:
-            path.append(curr)
-            curr = self.parent[curr]
-        return 'optimal path is: ', '->'.join(path[::-1])
+        current = self.target
+
+        while current:
+            self.path.append(current)
+            current = self.parent[current]
+        self.path = self.path[::-1]
+        print("path from", self.start, "to", self.target)
+        print_path=""
+        for node in self.path[:-1]:
+            print_path+=str(node)+" -> "
+        print(print_path+str(self.path[-1]))
 
 
-    def calculate_heuristic(start, target):
-
-            node1x, node1y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['latitude'], DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[start]['longitude']
-            node2x, node2y = DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[target]['latitude'] , DictionaryBuilder('_dataset/london.stations.csv',['id'],Station).info[target]['longitude']
+    def calculate_heuristic(start, target,data,attribute,type,heuristic1,heuristic2,):
+            node1x, node1y = DictionaryBuilder(data,attribute,type).info[start][heuristic1], DictionaryBuilder(data,attribute,type).info[start][heuristic2]
+            node2x, node2y = DictionaryBuilder(data,attribute,type).info[target][heuristic1] , DictionaryBuilder(data,attribute,type).info[target][heuristic2]
             heuristic = abs(float(node1x) - float(node2x)) + \
                 abs(float(node1y) - float(node2y))
             return 100*heuristic
 
-# graph = (GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],Connection,'undirected'))
-# start = '100'
-# target = '11'
-
-# A_Algo = AStar(graph,'100','11')
-# distances,parent = A_Algo.run()
-# Path=A_Algo.print_path()
-# print(Path)
