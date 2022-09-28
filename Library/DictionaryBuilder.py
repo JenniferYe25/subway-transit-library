@@ -9,6 +9,9 @@ class DictionaryBuilder:
 
         # creating dict
         self.info=dict()     
-        for d in data_obj:           
-            self.info.update({vars(d).pop(key[0]): vars(d)})
+        for d in data_obj:
+            temp_key=vars(d).pop(key[0])
+            if(temp_key.isdigit()):
+                temp_key=int(temp_key)
+            self.info.update({temp_key: vars(d)})
 
