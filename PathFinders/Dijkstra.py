@@ -17,6 +17,7 @@ class Dijkstra(PathFinder):
         prev_line=list(self.graph.get_edges(self.start)[0].items())[0][1][0]
 
         pq = [(0, self.start)]
+        counter = 0
         while len(pq) > 0:
             current_distance, current_vertex = heapq.heappop(pq)
 
@@ -36,6 +37,7 @@ class Dijkstra(PathFinder):
                 if distance < self.distances[neighbor]:
                     self.distances[neighbor] = distance
                     self.parent[neighbor]=current_vertex
+                    counter +=1
                 prev_line=current_line
                 heapq.heappush(pq, (distance, neighbor))
 
@@ -44,6 +46,7 @@ class Dijkstra(PathFinder):
         while current:
             self.path.append(current)
             current = self.parent[current]
+        return counter
         
     
     def print_path(self):
