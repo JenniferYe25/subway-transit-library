@@ -31,7 +31,7 @@ class SubwayPatrol:
                 final_weight=temp_weight
                 points=list(i)
 
-        path=find_shortest(self.graph, points)
+        path=find_path(self.graph, points)
         return path 
             
             
