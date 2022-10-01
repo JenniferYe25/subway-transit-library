@@ -1,4 +1,5 @@
 import heapq
+from importlib.resources import path
 import sys, os
 sys.path.append(os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)),'..','PathFinders')))
@@ -14,7 +15,7 @@ class Dijkstra(PathFinder):
         self.path = []
 
     def run(self):
-        prev_line=list(graph.get_edges(self.start)[0].items())[0][1][0]
+        prev_line=list(self.graph.get_edges(self.start)[0].items())[0][1][0]
 
         pq = [(0, self.start)]
         while len(pq) > 0:
@@ -23,7 +24,7 @@ class Dijkstra(PathFinder):
             if current_distance > self.distances[current_vertex]:
                 continue
            
-            for connection in graph.get_edges(current_vertex):
+            for connection in self.graph.get_edges(current_vertex):
                 values=list(connection.values())
                 neighbor=list(connection.keys())[0]
                 weight=values[0][0]
@@ -38,19 +39,41 @@ class Dijkstra(PathFinder):
                     self.parent[neighbor]=current_vertex
                 prev_line=current_line
                 heapq.heappush(pq, (distance, neighbor))
-
-        current = self.target
-
-        while current:
-            self.path.append(current)
-            current = self.parent[current]
-        
+               
     
     def print_path(self):
+        current = self.target
+        while current:
+            self.path.append(current)
+            try:
+                current = self.parent[current]
+            except:
+                print("Can't reach the target from the starting node")
+                return
+
         self.path = self.path[::-1]
         print("path from", self.start, "to", self.target)
         print_path=""
         for node in self.path[:-1]:
             print_path+=str(node)+" -> "
         print(print_path+str(self.path[-1]))
+    
+    def return_path(self):
+        current = self.target
+        while current:
+            self.path.append(current)
+            try:
+                current = self.parent[current]
+            except:
+                return None
+                
+        self.path = self.path[::-1]
+        print_path=[]
+        for node in self.path[:-1]:
+            print_path.append(node)
+        print_path.append(self.path[-1])
+        return print_path
+
+    def return_total_weight(self):
+        return self.distances
 
