@@ -31,7 +31,9 @@ class AStar(PathFinder):
         prev_line=list(self.graph.get_edges(self.start)[0].items())[0][1][0]
         pq = [(AStar.calculate_heuristic(self.start,self.target,self.data,self.attribute,self.type,self.heuristic1,self.heuristic2), 0 ,  self.start)] 
 
-        while pq: 
+        count = 0
+        while pq:
+            count +=1
             curr_f, curr_dist, curr_vert = heapq.heappop(pq) 
 
             if curr_vert not in visited:
@@ -55,10 +57,10 @@ class AStar(PathFinder):
 
                         if neighbor == self.target:
                             # we found a path based on heuristic
-                            return self.distances, self.parent
+                            return self.distances, self.parent,count
                         heapq.heappush(pq, (f_distance, distance, neighbor)) 
         # print('distance' ,distance, 'parent:' , parent)
-        return self.distances, self.parent
+        return self.distances, self.parent, count
 
 
     def print_path(self):

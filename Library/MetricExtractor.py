@@ -1,4 +1,4 @@
-from ..GraphObjs import *
+from GraphObjs import *
 from Library.GraphBuilder import *
 
 class MetricExtractor:
