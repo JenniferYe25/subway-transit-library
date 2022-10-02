@@ -38,19 +38,41 @@ class Dijkstra(PathFinder):
                     self.parent[neighbor]=current_vertex
                 prev_line=current_line
                 heapq.heappush(pq, (distance, neighbor))
-
-        current = self.target
-
-        while current:
-            self.path.append(current)
-            current = self.parent[current]
-        
+               
     
     def print_path(self):
+        current = self.target
+        while current:
+            self.path.append(current)
+            try:
+                current = self.parent[current]
+            except:
+                print("Can't reach the target from the starting node")
+                return
+
         self.path = self.path[::-1]
         print("path from", self.start, "to", self.target)
         print_path=""
         for node in self.path[:-1]:
             print_path+=str(node)+" -> "
         print(print_path+str(self.path[-1]))
+    
+    def return_path(self):
+        current = self.target
+        while current:
+            self.path.append(current)
+            try:
+                current = self.parent[current]
+            except:
+                return None
+                
+        self.path = self.path[::-1]
+        print_path=[]
+        for node in self.path[:-1]:
+            print_path.append(node)
+        print_path.append(self.path[-1])
+        return print_path
+
+    def return_total_weight(self):
+        return self.distances
 
