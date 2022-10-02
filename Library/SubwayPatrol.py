@@ -27,7 +27,6 @@ class SubwayPatrol:
                 temp_weight+=matrix[point][j]
                 point = j
             if(temp_weight < final_weight):
-                # print(i, temp_weight, final_weight)
                 final_weight=temp_weight
                 points=list(i)
 
