@@ -16,5 +16,8 @@ def testAStar():
     path = A_Algo.print_path()
     end = time.time()
     print(end-start)
+    print("Path: ", path)
+    print("Count: ", count)
 
 testAStar()
+

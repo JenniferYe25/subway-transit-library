@@ -1,1 +1,1 @@
-__all__=['DataExtractor','DictionaryBuilder','GraphBuilder']
+__all__=['DataExtractor','DictionaryBuilder','GraphBuilder','MetricExtractor']

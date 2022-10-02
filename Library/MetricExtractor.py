@@ -2,9 +2,8 @@ from GraphObjs import *
 from Library.GraphBuilder import *
 
 class MetricExtractor:
-    def __init__(self,graph,node) -> None:
+    def __init__(self,graph) -> None:
         self.graph=graph
-        self.node=node
     
     def total_nodes(self):
             return len(self.graph.get_nodes())
@@ -17,12 +16,12 @@ class MetricExtractor:
         return total_edges
 
     def average_degree(self):
-        metric = MetricExtractor()
-        if(self.graph.graph_type == "undirected"): return (metric.total_edges(graph)/2)/metric.total_nodes(graph)
-        return metric.total_edges(self.graph)/metric.total_nodes(self.graph)
+        metric = MetricExtractor(self.graph)
+        if(self.graph.graph_type == "undirected"): return (metric.total_edges()/2)/metric.total_nodes()
+        return metric.total_edges()/metric.total_nodes()
         
-    def degree(self):
-        degree= len(self.graph.get_edges(self.node))
+    def degree(self,node):
+        degree= len(self.graph.get_edges(node))
         return degree
 
 graph = GraphBuilder('_dataset/london.connections.csv',['station1','station2','time'],WeightedEdge,"undirected")

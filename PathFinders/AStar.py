@@ -70,11 +70,11 @@ class AStar(PathFinder):
             self.path.append(current)
             current = self.parent[current]
         self.path = self.path[::-1]
-        print("path from", self.start, "to", self.target)
-        print_path=""
+        print_path=[]
         for node in self.path[:-1]:
-            print_path+=str(node)+" -> "
-        print(print_path+str(self.path[-1]))
+            print_path.append(node)
+        print_path.append(self.path[-1])
+        return print_path
 
 
     def calculate_heuristic(dictionary,start, target,heuristic1,heuristic2,):
