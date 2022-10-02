@@ -1,20 +1,22 @@
 import heapq
-import sys, os
+import sys
+import os
 sys.path.append(os.path.normpath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),'..','PathFinders')))
+    os.path.dirname(os.path.abspath(__file__)), '..', 'PathFinders')))
 sys.path.append("..")
 sys.path.append(".")
 
-from GraphObjs import *
 from PathFinder import PathFinder
 
+
 class Dijkstra(PathFinder):
+
     def __init__(self, graph, start_node, target_node) -> None:
         super().__init__(graph, start_node, target_node)
         self.path = []
 
     def run(self):
-        prev_line=list(self.graph.get_edges(self.start)[0].items())[0][1][0]
+        prev_line = list(self.graph.get_edges(self.start)[0].items())[0][1][0]
 
         pq = [(0, self.start)]
         counter = 0
@@ -23,22 +25,22 @@ class Dijkstra(PathFinder):
 
             if current_distance > self.distances[current_vertex]:
                 continue
-           
+
             for connection in self.graph.get_edges(current_vertex):
-                values=list(connection.values())
-                neighbor=list(connection.keys())[0]
-                weight=values[0][0]
-                current_line=values[0][1]
+                values = list(connection.values())
+                neighbor = list(connection.keys())[0]
+                weight = values[0][0]
+                current_line = values[0][1]
 
                 distance = current_distance + weight
                 if prev_line != current_line:
-                    distance+=0.5
+                    distance += 0.5
 
                 if distance < self.distances[neighbor]:
                     self.distances[neighbor] = distance
-                    self.parent[neighbor]=current_vertex
-                    counter +=1
-                prev_line=current_line
+                    self.parent[neighbor] = current_vertex
+                    counter += 1
+                prev_line = current_line
                 heapq.heappush(pq, (distance, neighbor))
                
     
@@ -53,9 +55,8 @@ class Dijkstra(PathFinder):
                 return
 
         self.path = self.path[::-1]
-        print_path=[]
+        print_path = []
         for node in self.path[:-1]:
             print_path.append(node)
         print_path.append(self.path[-1])
         return print_path
-

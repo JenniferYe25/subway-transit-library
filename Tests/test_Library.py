@@ -11,4 +11,3 @@ from GraphBuilderTest import *
 # Graph builder test
 weightedEdgeGraph()
 unweightedEdgeGraph()
-
