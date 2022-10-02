@@ -40,5 +40,3 @@ def test_AStarAlgorithm_case3():
     distances,parent,count = A_Algo.run()
     assert A_Algo.print_path() == [77, 124, 8, 264, 139, 40, 89, 145, 7, 188, 167, 13, 225, 155]
     assert count == 124
-
-test_AStarAlgorithm_case1()
