@@ -20,5 +20,7 @@ def unweightedEdgeGraph():
     assert graph.value(1, 2) == '1'
     assert graph.value(2, 1) == '1'
 
+
 weightedEdgeGraph()
+
 unweightedEdgeGraph()
