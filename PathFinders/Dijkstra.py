@@ -38,8 +38,8 @@ class Dijkstra(PathFinder):
                     self.parent[neighbor]=current_vertex
                 prev_line=current_line
                 heapq.heappush(pq, (distance, neighbor))
-               
-    
+        return counter
+
     def print_path(self):
         current = self.target
         while current:
