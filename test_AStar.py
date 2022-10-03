@@ -54,6 +54,7 @@ def test_AStarAlgorithm_case3():
     assert path == [77, 124, 8, 264, 139, 40, 89, 145, 7, 188, 167, 13, 225, 155]
     assert count == 124
 
+
 test_AStarAlgorithm_case1()
 
 test_AStarAlgorithm_case2()
