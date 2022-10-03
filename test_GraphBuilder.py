@@ -19,3 +19,6 @@ def unweightedEdgeGraph():
     assert graph.get_edges(1) == [{2: ['1', '1']}, {3: ['2', '1']}]
     assert graph.value(1, 2) == '1'
     assert graph.value(2, 1) == '1'
+
+weightedEdgeGraph()
+unweightedEdgeGraph()
